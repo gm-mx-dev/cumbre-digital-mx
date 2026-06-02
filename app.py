@@ -1,32 +1,18 @@
-import sqlite3
+import os
+import psycopg
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for
 
-app = Flask(__name__)
+load_dotenv()
+DATABASE_URL = os.environ['DATABASE_URL']
 
-DB = 'evento.db'
+app = Flask(__name__)
 
 AREAS_VALIDAS = {'Tecnología', 'Marketing', 'Negocios', 'Emprendimiento'}
 
 
 def get_db():
-    conn = sqlite3.connect(DB)
-    conn.row_factory = sqlite3.Row
-    return conn
-
-
-def init_db():
-    with get_db() as conn:
-        conn.execute('''
-            CREATE TABLE IF NOT EXISTS asistentes (
-                id             INTEGER  PRIMARY KEY AUTOINCREMENT,
-                num_registro   TEXT     UNIQUE NOT NULL,
-                nombre         TEXT     NOT NULL,
-                email          TEXT     UNIQUE NOT NULL,
-                empresa        TEXT     NOT NULL,
-                area_interes   TEXT     NOT NULL,
-                fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
+    return psycopg.connect(DATABASE_URL, row_factory=psycopg.rows.dict_row)
 
 
 @app.route('/')
@@ -58,29 +44,29 @@ def registrar():
     try:
         with get_db() as conn:
             cursor = conn.execute(
-                'INSERT INTO asistentes (num_registro, nombre, email, empresa, area_interes) '
-                'VALUES (?, ?, ?, ?, ?)',
+                'INSERT INTO asistentes (numero_registro, nombre, email, empresa, area_interes) '
+                'VALUES (%s, %s, %s, %s, %s) RETURNING id',
                 ('TMP', nombre, email, empresa, area_interes)
             )
-            nuevo_id = cursor.lastrowid
-            num_registro = f'REG-{nuevo_id:04d}'
+            nuevo_id = cursor.fetchone()['id']
+            numero_registro = f'REG-{nuevo_id:04d}'
             conn.execute(
-                'UPDATE asistentes SET num_registro = ? WHERE id = ?',
-                (num_registro, nuevo_id)
+                'UPDATE asistentes SET numero_registro = %s WHERE id = %s',
+                (numero_registro, nuevo_id)
             )
-    except sqlite3.IntegrityError:
+    except psycopg.errors.UniqueViolation:
         return render_template('index.html',
                                error='Este correo electrónico ya está registrado.',
                                nombre_previo=nombre, empresa_previa=empresa, area_previa=area_interes)
 
-    return redirect(url_for('confirmacion', num_registro=num_registro))
+    return redirect(url_for('confirmacion', numero_registro=numero_registro))
 
 
-@app.route('/confirmacion/<num_registro>')
-def confirmacion(num_registro):
+@app.route('/confirmacion/<numero_registro>')
+def confirmacion(numero_registro):
     with get_db() as conn:
         asistente = conn.execute(
-            'SELECT * FROM asistentes WHERE num_registro = ?', (num_registro,)
+            'SELECT * FROM asistentes WHERE numero_registro = %s', (numero_registro,)
         ).fetchone()
 
     if asistente is None:
@@ -100,5 +86,4 @@ def admin():
 
 
 if __name__ == '__main__':
-    init_db()
     app.run(debug=True)
