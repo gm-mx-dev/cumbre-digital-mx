@@ -1,0 +1,9 @@
+venv/
+evento.db
+__pycache__/
+*.pyc
+*.log
+.env
+.python-version
+.claude/
+.playwright-mcp/

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administración — Cumbre Digital MX 2026</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
+</head>
+<body>
+
+  <div class="tarjeta" style="max-width: 900px;">
+    <header>
+      <div class="logo">Cumbre Digital MX 2026</div>
+      <p class="subtitulo">Panel de administración · Asistentes registrados</p>
+    </header>
+
+    <hr class="divisor" />
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span class="titulo-admin">Registros</span>
+      <span class="contador">{{ asistentes | length }} asistente{{ 's' if asistentes | length != 1 else '' }} registrado{{ 's' if asistentes | length != 1 else '' }}</span>
+    </div>
+
+    {% if asistentes %}
+    <table class="tabla-registros">
+      <thead>
+        <tr>
+          <th>Núm. Registro</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Empresa</th>
+          <th>Área</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in asistentes %}
+        <tr>
+          <td style="color: var(--acento-cian); font-weight: 700;">{{ a.num_registro }}</td>
+          <td>{{ a.nombre }}</td>
+          <td style="color: var(--texto-suave);">{{ a.email }}</td>
+          <td>{{ a.empresa }}</td>
+          <td><span class="badge-area">{{ a.area_interes }}</span></td>
+          <td style="color: var(--texto-suave); font-size: 0.82rem;">{{ a.fecha_registro }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p style="color: var(--texto-suave); text-align: center; padding: 2rem 0;">
+      Aún no hay asistentes registrados.
+    </p>
+    {% endif %}
+
+    <div style="margin-top: 1.5rem; text-align: right;">
+      <a href="/" class="btn-secundario" style="width: auto; padding: 0.5rem 1.25rem;">← Ir al formulario</a>
+    </div>
+  </div>
+
+  <footer>Cumbre Digital MX 2026 · Todos los derechos reservados</footer>
+
+</body>
+</html>

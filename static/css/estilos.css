@@ -1,0 +1,307 @@
+/* ── Variables y reset base ── */
+:root {
+  --fondo:       #0d0d1a;
+  --superficie:  #1a1a2e;
+  --borde:       #2a2a4a;
+  --acento:      #0066ff;
+  --acento-cian: #00c8ff;
+  --texto:       #e8e8f0;
+  --texto-suave: #8888aa;
+  --error:       #ff4466;
+  --exito:       #00e887;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--fondo);
+  color: var(--texto);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* ── Contenedor principal ── */
+.tarjeta {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 8px 40px rgba(0, 102, 255, 0.12);
+}
+
+/* ── Logo y encabezado ── */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, var(--acento), var(--acento-cian));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.subtitulo {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+.divisor {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--acento), transparent);
+  margin: 1.5rem 0;
+  border: none;
+}
+
+/* ── Formulario ── */
+.grupo {
+  margin-bottom: 1.25rem;
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+input,
+select {
+  width: 100%;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  color: var(--texto);
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Flecha personalizada para el select */
+.contenedor-select {
+  position: relative;
+}
+
+.contenedor-select::after {
+  content: '▾';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--texto-suave);
+  pointer-events: none;
+  font-size: 0.9rem;
+}
+
+input::placeholder {
+  color: var(--texto-suave);
+  opacity: 0.6;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--acento);
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+}
+
+select option[value=""] {
+  color: var(--texto-suave);
+}
+
+/* ── Mensaje de error ── */
+.mensaje-error {
+  background: rgba(255, 68, 102, 0.1);
+  border: 1px solid rgba(255, 68, 102, 0.4);
+  border-radius: 8px;
+  color: var(--error);
+  font-size: 0.88rem;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Botón principal ── */
+.btn-primario {
+  width: 100%;
+  background: var(--acento);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.85rem;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+.btn-primario:hover {
+  background: #0055dd;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
+}
+
+.btn-primario:active {
+  transform: scale(0.98);
+}
+
+/* ── Vista de confirmación ── */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.icono-exito {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.num-registro {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--acento-cian);
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.confirmacion-titulo {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.confirmacion-detalle {
+  background: rgba(0, 102, 255, 0.07);
+  border: 1px solid rgba(0, 102, 255, 0.2);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.confirmacion-detalle strong {
+  color: var(--acento-cian);
+}
+
+.bienvenida {
+  text-align: center;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* ── Botón secundario ── */
+.btn-secundario {
+  display: inline-block;
+  width: 100%;
+  background: transparent;
+  color: var(--acento-cian);
+  border: 1px solid var(--acento-cian);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.75rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.btn-secundario:hover {
+  background: rgba(0, 200, 255, 0.08);
+  box-shadow: 0 0 12px rgba(0, 200, 255, 0.25);
+}
+
+/* ── Tabla de admin ── */
+.tabla-registros {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-top: 1.5rem;
+}
+
+.tabla-registros th {
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--borde);
+}
+
+.tabla-registros td {
+  padding: 0.7rem 0.75rem;
+  border-bottom: 1px solid rgba(42, 42, 74, 0.6);
+  color: var(--texto);
+}
+
+.tabla-registros tr:hover td {
+  background: rgba(0, 102, 255, 0.05);
+}
+
+.badge-area {
+  display: inline-block;
+  background: rgba(0, 102, 255, 0.15);
+  border: 1px solid rgba(0, 102, 255, 0.3);
+  border-radius: 20px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.78rem;
+  color: var(--acento-cian);
+}
+
+.contador {
+  color: var(--texto-suave);
+  font-size: 0.88rem;
+  margin-top: 0.5rem;
+}
+
+.titulo-admin {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* ── Pie de página ── */
+footer {
+  margin-top: 1.5rem;
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+/* ── Responsivo ── */
+@media (max-width: 480px) {
+  .tarjeta {
+    padding: 1.75rem 1.25rem;
+  }
+  .logo {
+    font-size: 1.35rem;
+  }
+}

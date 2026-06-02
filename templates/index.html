@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cumbre Digital MX 2026 — Registro</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
+</head>
+<body>
+
+  <div class="tarjeta">
+    <header>
+      <div class="logo">Cumbre Digital MX 2026</div>
+      <p class="subtitulo">Transformación digital para PyMEs · Registro de asistentes</p>
+    </header>
+
+    <hr class="divisor" />
+
+    {% if error %}
+    <div class="mensaje-error" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <form action="/registrar" method="POST">
+
+      <div class="grupo">
+        <label for="nombre">Nombre completo</label>
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          placeholder="Ej. María González López"
+          autocomplete="name"
+          value="{{ nombre_previo or '' }}"
+          required
+        />
+      </div>
+
+      <div class="grupo">
+        <label for="email">Correo electrónico</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Ej. maria@empresa.com"
+          autocomplete="email"
+          value="{{ email_previo or '' }}"
+          required
+        />
+      </div>
+
+      <div class="grupo">
+        <label for="empresa">Empresa u organización</label>
+        <input
+          type="text"
+          id="empresa"
+          name="empresa"
+          placeholder="Ej. Soluciones Tech SA de CV"
+          autocomplete="organization"
+          value="{{ empresa_previa or '' }}"
+          required
+        />
+      </div>
+
+      <div class="grupo">
+        <label for="area_interes">Área de interés</label>
+        <div class="contenedor-select">
+          <select id="area_interes" name="area_interes" required>
+            <option value="">— Selecciona un área —</option>
+            <option value="Tecnología"      {% if area_previa == 'Tecnología' %}selected{% endif %}>Tecnología</option>
+            <option value="Marketing"       {% if area_previa == 'Marketing' %}selected{% endif %}>Marketing</option>
+            <option value="Negocios"        {% if area_previa == 'Negocios' %}selected{% endif %}>Negocios</option>
+            <option value="Emprendimiento"  {% if area_previa == 'Emprendimiento' %}selected{% endif %}>Emprendimiento</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primario">Registrarme al evento</button>
+
+    </form>
+  </div>
+
+  <footer>Cumbre Digital MX 2026 · Todos los derechos reservados</footer>
+
+</body>
+</html>

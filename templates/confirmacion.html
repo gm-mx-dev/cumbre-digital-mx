@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro confirmado — Cumbre Digital MX 2026</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
+</head>
+<body>
+
+  <div class="tarjeta">
+    <header>
+      <div class="logo">Cumbre Digital MX 2026</div>
+      <p class="subtitulo">Transformación digital para PyMEs</p>
+    </header>
+
+    <hr class="divisor" />
+
+    <div class="icono-exito">✅</div>
+    <div class="num-registro">{{ asistente.num_registro }}</div>
+    <p class="confirmacion-titulo">¡Registro completado!</p>
+
+    <div class="confirmacion-detalle">
+      Hola, <strong>{{ asistente.nombre }}</strong>.<br />
+      Tu lugar en la Cumbre Digital MX 2026 está reservado.<br />
+      Guarda tu número de registro — lo necesitarás el día del evento.
+    </div>
+
+    <div class="confirmacion-detalle">
+      <strong>Empresa:</strong> {{ asistente.empresa }}<br />
+      <strong>Área de interés:</strong> {{ asistente.area_interes }}
+    </div>
+
+    <p class="bienvenida">
+      Te esperamos para explorar juntos las mejores estrategias de
+      transformación digital para PyMEs. ¡Nos vemos en la cumbre!
+    </p>
+
+    <a href="/" class="btn-secundario">Registrar a otra persona</a>
+  </div>
+
+  <footer>Cumbre Digital MX 2026 · Todos los derechos reservados</footer>
+
+</body>
+</html>
